@@ -11,11 +11,11 @@
 
         <default-action-ref name="index" />
 
-        <action name="index" class="${package}.IndexAction">
+        <action name="index" class="cz.mikealdo.struts2components.IndexAction">
             <result>/jsp/index.jsp</result>
         </action>
 
-        <action name="helloWorld" class="helloWorldAction">
+        <action name="helloWorld" class="cz.mikealdo.struts2components.HelloWorldAction">
             <result name="input">/jsp/index.jsp</result>
             <result>/jsp/helloWorld.jsp</result>
         </action>
