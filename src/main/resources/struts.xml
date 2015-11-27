@@ -7,12 +7,15 @@
 
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
 
+    <bean type="com.opensymphony.xwork2.ActionProxyFactory" name="xwork" class="cz.mikealdo.struts2components.struts2.DefaultActionProxyFactory"/>
+    <bean type="com.opensymphony.xwork2.ActionProxyFactory" name="struts" class="cz.mikealdo.struts2components.struts2.StrutsActionProxyFactory"/>
+
     <package name="myPackage" extends="struts-default">
 
         <default-action-ref name="index" />
 
         <action name="index" class="cz.mikealdo.struts2components.IndexAction">
-            <result>/jsp/index.jsp</result>
+            <result type="freemarker">/ftl/index.ftl</result>
         </action>
 
         <action name="helloWorld" class="cz.mikealdo.struts2components.HelloWorldAction">
