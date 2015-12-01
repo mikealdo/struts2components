@@ -15,6 +15,7 @@
  */
 package cz.mikealdo.struts2components;
 
+import cz.mikealdo.struts2components.actions.IndexAction;
 import junit.framework.TestCase;
 
 import com.opensymphony.xwork2.Action;

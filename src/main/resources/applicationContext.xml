@@ -5,7 +5,7 @@
 	
 <beans>
 	<!-- Example of SAF2 action instantiated by Spring -->
-    <bean id="helloWorldAction" class="cz.mikealdo.struts2components.HelloWorldAction" singleton="false" />
+    <bean id="helloWorldAction" class="cz.mikealdo.struts2components.actions.HelloWorldAction" singleton="false" />
 
 </beans>
 

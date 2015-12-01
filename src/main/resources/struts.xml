@@ -7,18 +7,30 @@
 
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
 
+
+
     <bean type="com.opensymphony.xwork2.ActionProxyFactory" name="xwork" class="cz.mikealdo.struts2components.struts2.DefaultActionProxyFactory"/>
     <bean type="com.opensymphony.xwork2.ActionProxyFactory" name="struts" class="cz.mikealdo.struts2components.struts2.StrutsActionProxyFactory"/>
 
     <package name="myPackage" extends="struts-default">
 
+        <interceptors>
+            <interceptor name="sessionFieldInterceptor" class="cz.mikealdo.struts2components.struts2.SessionFieldInterceptor"/>
+            <interceptor-stack name="componentsStack">
+                <interceptor-ref name="sessionFieldInterceptor" />
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="componentsStack"/>
+
         <default-action-ref name="index" />
 
-        <action name="index" class="cz.mikealdo.struts2components.IndexAction">
+        <action name="index" class="cz.mikealdo.struts2components.actions.IndexAction">
             <result type="freemarker">/ftl/index.ftl</result>
         </action>
 
-        <action name="helloWorld" class="cz.mikealdo.struts2components.HelloWorldAction">
+        <action name="helloWorld" class="cz.mikealdo.struts2components.actions.HelloWorldAction">
             <result name="input">/jsp/index.jsp</result>
             <result>/jsp/helloWorld.jsp</result>
         </action>
