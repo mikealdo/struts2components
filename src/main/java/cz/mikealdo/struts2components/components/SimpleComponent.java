@@ -7,18 +7,17 @@ import cz.mikealdo.struts2components.struts2.components.ComponentOnPageAware;
 
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
-public class SimpleComponent implements Component, ComponentOnPageAware<IndexAction> {
+public abstract class SimpleComponent implements Component, ComponentOnPageAware<IndexAction> {
 
     @SessionField
     private Integer integerInsideComponent;
 
-    public SimpleComponent(Integer integerInsideComponent) {
-        this.integerInsideComponent = integerInsideComponent;
+    public SimpleComponent() {
+        integerInsideComponent = 0;
     }
 
-    @Override
-    public String getId() {
-        return "simpleComponent";
+    public SimpleComponent(Integer integerInsideComponent) {
+        this.integerInsideComponent = integerInsideComponent;
     }
 
     @Override
@@ -44,7 +43,12 @@ public class SimpleComponent implements Component, ComponentOnPageAware<IndexAct
         return integerInsideComponent;
     }
 
-    public void plusOne() {
+    public void setIntegerInsideComponent(Integer integerInsideComponent) {
+        this.integerInsideComponent = integerInsideComponent;
+    }
+
+    public String plusOne() {
         integerInsideComponent++;
+        return render();
     }
 }

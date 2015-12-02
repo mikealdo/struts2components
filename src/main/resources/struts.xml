@@ -5,7 +5,7 @@
 
 <struts>
 
-    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 
 
 
@@ -16,8 +16,10 @@
 
         <interceptors>
             <interceptor name="sessionFieldInterceptor" class="cz.mikealdo.struts2components.struts2.SessionFieldInterceptor"/>
+            <interceptor name="componentOnPageInitInterceptor" class="cz.mikealdo.struts2components.struts2.ComponentOnPageInitInterceptor"/>
             <interceptor-stack name="componentsStack">
                 <interceptor-ref name="sessionFieldInterceptor" />
+                <interceptor-ref name="componentOnPageInitInterceptor" />
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
         </interceptors>
@@ -26,8 +28,11 @@
 
         <default-action-ref name="index" />
 
-        <action name="index" class="cz.mikealdo.struts2components.actions.IndexAction">
-            <result type="freemarker">/ftl/index.ftl</result>
+        <action name="index" class="cz.mikealdo.struts2components.actions.IndexAction" method="execute">
+            <result type="freemarker" name="input">/ftl/index.ftl</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
         </action>
 
         <action name="helloWorld" class="cz.mikealdo.struts2components.actions.HelloWorldAction">

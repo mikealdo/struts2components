@@ -18,41 +18,44 @@ package cz.mikealdo.struts2components.actions;
 import com.google.common.collect.ImmutableList;
 import com.opensymphony.xwork2.ActionSupport;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
+
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
-import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import cz.mikealdo.struts2components.components.FirstSimpleComponent;
+import cz.mikealdo.struts2components.components.SecondSimpleComponent;
 import cz.mikealdo.struts2components.components.SimpleComponent;
 import cz.mikealdo.struts2components.struts2.components.Component;
-import cz.mikealdo.struts2components.struts2.components.ComponentOnPageAware;
 import cz.mikealdo.struts2components.struts2.components.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Conversion()
 public class IndexAction extends ActionSupport implements Page {
-    
-    private Date now = new Date(System.currentTimeMillis());
-    private SimpleComponent simpleComponent = new SimpleComponent(0);
-    
-    @TypeConversion(converter = "cz.mikealdo.struts2components.converter.DateConverter")
-    public Date getDateNow() { return now; }
-    
-    public String execute() throws Exception {
-        now = new Date(System.currentTimeMillis());
-        return SUCCESS;
+
+    private FirstSimpleComponent firstComponent;
+    private SecondSimpleComponent secondComponent;
+
+    @Autowired
+    public IndexAction(FirstSimpleComponent firstComponent, SecondSimpleComponent secondComponent) {
+        this.firstComponent = firstComponent;
+        this.secondComponent = secondComponent;
     }
 
-
+    public String execute() throws Exception {
+        return render();
+    }
 
     @Override
     public Component getChild(String id) {
-        return simpleComponent;
+        for (Component component : getChildren()) {
+            if (component.getId().equals(id))
+                return component;
+        }
+        throw new IllegalArgumentException("No such component exist");
     }
 
     @Override
     public Collection<Component> getChildren() {
-        return ImmutableList.of(simpleComponent);
+        return ImmutableList.of(firstComponent, secondComponent);
     }
 
     @Override
@@ -72,10 +75,16 @@ public class IndexAction extends ActionSupport implements Page {
 
     @Override
     public String render() {
-        return simpleComponent.render();
+        firstComponent.render();
+        secondComponent.render();
+        return INPUT;
     }
 
-    public SimpleComponent getSimpleComponent() {
-        return simpleComponent;
+    public SimpleComponent getFirstComponent() {
+        return firstComponent;
+    }
+
+    public SimpleComponent getSecondComponent() {
+        return secondComponent;
     }
 }

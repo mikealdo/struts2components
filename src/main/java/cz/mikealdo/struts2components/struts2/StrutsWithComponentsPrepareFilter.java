@@ -4,6 +4,7 @@ import ognl.IteratorEnumeration;
 import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter;
+import org.apache.struts2.dispatcher.ng.listener.StrutsListener;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -15,15 +16,15 @@ import java.util.Map;
 /**
  * This prepare filter for Struts2 should be used instead of standard {@link StrutsPrepareFilter} and
  * {@link StrutsListener} together. It initializes a dispatcher only once and also changes default
- * configuration files to load struts-terra-default.xml instead of struts-terra-default.xml, which will
+ * configuration files to load struts-overridden-default.xml instead of struts-overridden-default.xml, which will
  * be totally ignored. Obviously there is still option to configure configuration files by filter
  * init parameters.
  */
 
-public class TerraStrutsPrepareFilter extends StrutsPrepareFilter {
+public class StrutsWithComponentsPrepareFilter extends StrutsPrepareFilter {
 
   public static final String CONFIG_PARAM_NAME = "config";
-  public static final String DEFAULT_CONFIG_FILES = "struts-terra-default.xml,struts-plugin.xml,struts.xml";
+  public static final String DEFAULT_CONFIG_FILES = "struts-overridden-default.xml,struts-plugin.xml,struts.xml";
   
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {

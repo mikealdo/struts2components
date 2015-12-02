@@ -16,6 +16,9 @@
 package cz.mikealdo.struts2components;
 
 import cz.mikealdo.struts2components.actions.IndexAction;
+import cz.mikealdo.struts2components.components.FirstSimpleComponent;
+import cz.mikealdo.struts2components.components.SecondSimpleComponent;
+import cz.mikealdo.struts2components.components.SimpleComponent;
 import junit.framework.TestCase;
 
 import com.opensymphony.xwork2.Action;
@@ -26,7 +29,7 @@ import com.opensymphony.xwork2.Action;
 public class IndexActionTest extends TestCase {
     
     public void testIndexAction() throws Exception {
-        IndexAction action = new IndexAction();
+        IndexAction action = new IndexAction(new FirstSimpleComponent(), new SecondSimpleComponent());
         String result = action.execute();
         assertEquals(Action.SUCCESS, result);
     }
