@@ -31,6 +31,6 @@ public class IndexActionTest extends TestCase {
     public void testIndexAction() throws Exception {
         IndexAction action = new IndexAction(new FirstSimpleComponent(), new SecondSimpleComponent());
         String result = action.execute();
-        assertEquals(Action.SUCCESS, result);
+        assertEquals(Action.INPUT, result);
     }
 }
