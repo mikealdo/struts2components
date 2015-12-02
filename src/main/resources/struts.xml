@@ -35,11 +35,6 @@
             </result>
         </action>
 
-        <action name="helloWorld" class="cz.mikealdo.struts2components.actions.HelloWorldAction">
-            <result name="input">/jsp/index.jsp</result>
-            <result>/jsp/helloWorld.jsp</result>
-        </action>
-
     </package>
 
 </struts>

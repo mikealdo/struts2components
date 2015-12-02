@@ -5,7 +5,6 @@
 	
 <beans>
 	<!-- Example of SAF2 action instantiated by Spring -->
-    <bean id="helloWorldAction" class="cz.mikealdo.struts2components.actions.HelloWorldAction" singleton="false" />
     <bean id="indexAction" class="cz.mikealdo.struts2components.actions.IndexAction" singleton="false" />
     <bean id="simpleComponent" class="cz.mikealdo.struts2components.components.SimpleComponent" abstract="true" singleton="false" />
     <bean id="firstComponent" class="cz.mikealdo.struts2components.components.FirstSimpleComponent" parent="simpleComponent" singleton="false" />
