@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>struts2components</name>
-	<description>Struts 2 Starter</description>
+	<description>Struts 2 Components</description>
 
     <properties>
         <struts2.version>2.3.15.1</struts2.version>
@@ -99,10 +99,12 @@
     </dependencies>
 	
     <build>
-      <finalName>struts2-archetype-starter</finalName>
+      <finalName>struts2components</finalName>
     	<plugins>
     		<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
                    <source>1.8</source>
                    <target>1.8</target>
@@ -157,9 +159,6 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.1.0</version>
-                <configuration>
-                    <repoToken>jurr4BpDl7KKJ1cIPWXfm3hSQGp6VKTP9</repoToken>
-                </configuration>
             </plugin>
     	</plugins>
     </build>
