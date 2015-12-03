@@ -21,15 +21,9 @@ import java.util.Map;
 public class SessionFieldResolver {
 
   private static final Object NULL = new NULLClass();
-  private Long dashletId;
   private ActionContext actionContext;
 
   public SessionFieldResolver(ActionContext actionContext) {
-    this.actionContext = actionContext;
-  }
-
-  public SessionFieldResolver(Long dashletId, ActionContext actionContext) {
-    this.dashletId = dashletId;
     this.actionContext = actionContext;
   }
 
@@ -87,21 +81,7 @@ public class SessionFieldResolver {
     }
     String componentPrefix = "component";
     componentId = "_" + componentId;
-    if (dashletId != null) {
-      componentPrefix = resolveDashletPrefixForSessionParameter();
-      if (!componentId.equals("_simplySearchComponent")) {
-        componentId = "";
-      }
-    }
     return componentPrefix + componentId + fieldName;
-  }
-
-  private String resolveDashletPrefixForSessionParameter() {
-    return "dashlets_" + dashletId + "";
-  }
-
-  private String resolveDashletPrefixForOgnlExpression() {
-    return "dashlets[" + dashletId + "]";
   }
 
   private String createSessionId(String componentId) {
@@ -117,19 +97,7 @@ public class SessionFieldResolver {
   }
 
   private String createOgnlExpression(Component component, Field field) {
-    String ognlExpr;
-    String dashletPrefix = "";
-    if (dashletId != null) {
-      dashletPrefix = resolveDashletPrefixForOgnlExpression();
-    }
-    if (dashletPrefix.isEmpty()) {
-      ognlExpr = component.getId() + "." + field.getName();
-    } else if (component.getId().equals("simplySearchComponent")) {
-      ognlExpr = dashletPrefix + ".simplySearchComponent." + field.getName();
-    } else {
-      ognlExpr = dashletPrefix + "." + field.getName();
-    }
-    return ognlExpr;
+    return component.getId() + "." + field.getName();
   }
 
   private void putValueIntoSession(String sessionId, String expr) {

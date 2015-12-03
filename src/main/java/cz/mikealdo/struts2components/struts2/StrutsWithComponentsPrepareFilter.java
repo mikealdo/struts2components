@@ -23,71 +23,75 @@ import java.util.Map;
 
 public class StrutsWithComponentsPrepareFilter extends StrutsPrepareFilter {
 
-  public static final String CONFIG_PARAM_NAME = "config";
-  public static final String DEFAULT_CONFIG_FILES = "struts-overridden-default.xml,struts-plugin.xml,struts.xml";
-  
-  @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
-    //copy actual filter configuration and put default configuration files parameter if it's not already placed here
-    ConfigurableFilterConfig newerFilterConfig = new ConfigurableFilterConfig(filterConfig);
-    if ( !newerFilterConfig.containsInitParameter(CONFIG_PARAM_NAME) ) {
-      newerFilterConfig.addInitParameter(CONFIG_PARAM_NAME, DEFAULT_CONFIG_FILES);
-    }
-    
-    super.init(newerFilterConfig);
-  }
+    public static final String CONFIG_PARAM_NAME = "config";
+    public static final String DEFAULT_CONFIG_FILES = "struts-overridden-default.xml,struts-plugin.xml,struts.xml";
 
-  @Override
-  protected void postInit(Dispatcher dispatcher, FilterConfig filterConfig) {
-    //do the only useful thing which StrutsListener do
-    filterConfig.getServletContext().setAttribute(StrutsStatics.SERVLET_DISPATCHER, dispatcher);
-  }
+    /***
+     * copy actual filter configuration and put default configuration files parameter if it's not already placed here
+     * @param filterConfig
+     * @throws ServletException
+     */
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        //
+        ConfigurableFilterConfig newerFilterConfig = new ConfigurableFilterConfig(filterConfig);
+        if (!newerFilterConfig.containsInitParameter(CONFIG_PARAM_NAME)) {
+            newerFilterConfig.addInitParameter(CONFIG_PARAM_NAME, DEFAULT_CONFIG_FILES);
+        }
 
-  /**
-   * Object which has customizable init parameters. Everything else delegates to real {@link FilterConfig} instance.
-   */
-  private static class ConfigurableFilterConfig implements FilterConfig {
-    
-    private final FilterConfig filterConfig;
-    private final Map<String, String> initParameters = new LinkedHashMap<String, String>();
-    
-    public ConfigurableFilterConfig(FilterConfig filterConfig) {
-      super();
-      this.filterConfig = filterConfig;
-      for (Enumeration<?> iterator = filterConfig.getInitParameterNames(); iterator.hasMoreElements(); ) {
-        String paramName = (String)iterator.nextElement();
-        String paramValue = filterConfig.getInitParameter(paramName);
-        initParameters.put(paramName, paramValue);
-      }
+        super.init(newerFilterConfig);
     }
-    
+
     @Override
-    public String getFilterName() {
-      return filterConfig.getFilterName();
+    protected void postInit(Dispatcher dispatcher, FilterConfig filterConfig) {
+        filterConfig.getServletContext().setAttribute(StrutsStatics.SERVLET_DISPATCHER, dispatcher);
     }
-    
-    @Override
-    public ServletContext getServletContext() {
-      return filterConfig.getServletContext();
+
+    /**
+     * Object which has customizable init parameters. Everything else delegates to real {@link FilterConfig} instance.
+     */
+    private static class ConfigurableFilterConfig implements FilterConfig {
+
+        private final FilterConfig filterConfig;
+        private final Map<String, String> initParameters = new LinkedHashMap<String, String>();
+
+        public ConfigurableFilterConfig(FilterConfig filterConfig) {
+            super();
+            this.filterConfig = filterConfig;
+            for (Enumeration<?> iterator = filterConfig.getInitParameterNames(); iterator.hasMoreElements(); ) {
+                String paramName = (String) iterator.nextElement();
+                String paramValue = filterConfig.getInitParameter(paramName);
+                initParameters.put(paramName, paramValue);
+            }
+        }
+
+        @Override
+        public String getFilterName() {
+            return filterConfig.getFilterName();
+        }
+
+        @Override
+        public ServletContext getServletContext() {
+            return filterConfig.getServletContext();
+        }
+
+        @Override
+        public String getInitParameter(String name) {
+            return initParameters.get(name);
+        }
+
+        @Override
+        public Enumeration<String> getInitParameterNames() {
+            return new IteratorEnumeration(initParameters.keySet().iterator());
+        }
+
+        public void addInitParameter(String name, String value) {
+            initParameters.put(name, value);
+        }
+
+        public boolean containsInitParameter(String name) {
+            return initParameters.containsKey(name);
+        }
     }
-    
-    @Override
-    public String getInitParameter(String name) {
-      return initParameters.get(name);
-    }
-    
-    @Override
-    public Enumeration<String> getInitParameterNames() {
-      return new IteratorEnumeration(initParameters.keySet().iterator());
-    }
-    
-    public void addInitParameter(String name, String value) {
-      initParameters.put(name, value);
-    }
-    
-    public boolean containsInitParameter(String name) {
-      return initParameters.containsKey(name);
-    }
-  }
-  
+
 }
