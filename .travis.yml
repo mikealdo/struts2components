@@ -25,5 +25,5 @@ env:
 - TERM=dumb
 
 after_success:
-
+- mvn clean test jacoco:report coveralls:report
 

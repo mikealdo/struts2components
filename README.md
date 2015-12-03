@@ -1,1 +1,1 @@
-# struts2components
+# struts2components [![Build Status](https://travis-ci.org/mikealdo/struts2components.svg?branch=master)](https://travis-ci.org/mikealdo/struts2components) [![Coverage Status](https://coveralls.io/repos/mikealdo/struts2components/badge.svg?branch=master&service=github)](https://coveralls.io/github/mikealdo/struts2components?branch=master)
