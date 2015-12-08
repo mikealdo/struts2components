@@ -7,7 +7,7 @@ import cz.mikealdo.struts2components.struts2.components.ComponentOnPageAware;
 
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
-public abstract class SimpleComponent implements Component, ComponentOnPageAware<IndexAction> {
+public abstract class SimpleComponent implements ComponentOnPageAware<IndexAction> {
 
     @SessionField
     private Integer integerInsideComponent;
